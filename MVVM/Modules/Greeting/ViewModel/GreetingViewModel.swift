@@ -40,6 +40,7 @@ class GreetingViewModel : GreetingViewModelProtocol {
     
     func simulateDownloadingData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
+<<<<<<< HEAD
             guard let self = self else {
                 return
             }
@@ -47,6 +48,12 @@ class GreetingViewModel : GreetingViewModelProtocol {
                                          lastName: "Blain",
                                          greeting: "")
             loadedData()
+=======
+            self?.data = GreetingViewData.Data(firstName: "David",
+                                               lastName: "Blain",
+                                               greeting: "")
+            self?.loadedData()
+>>>>>>> master
         }
     }
 }
