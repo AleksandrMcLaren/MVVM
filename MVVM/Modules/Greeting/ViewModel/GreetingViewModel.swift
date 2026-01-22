@@ -6,41 +6,61 @@
 //
 
 import Foundation
+import Combine
 
 protocol GreetingViewModelProtocol: AnyObject {
-    var updateViewData: ((GreetingViewData) -> ())? { get set }
+    var viewDataPublisher: Published<GreetingViewData?>.Publisher { get }
+    
+    /* without Combine
+     var updateViewData: ((GreetingViewData) -> ())? { get set } */
+    
     func startFetch()
 }
 
 class GreetingViewModel : GreetingViewModelProtocol {
     var data: GreetingViewData.Data!
-    var updateViewData: ((GreetingViewData) -> ())?
-
+    @Published var viewData: GreetingViewData?
+    var viewDataPublisher: Published<GreetingViewData?>.Publisher { $viewData }
+    
+    /* without Combine
+     var updateViewData: ((GreetingViewData) -> ())? */
+    
     func startFetch() {
-        updateViewData?(.loading)
+        /* without Combine
+         updateViewData?(.loading) */
+        
+        viewData = (.loading)
         simulateDownloadingData()
     }
-
+    
     func loadedData() {
         data.greeting = "Hello I'm AI"
-        updateViewData?(.loaded(data))
+        viewData = (.loaded(data))
+        
+        /* without Combine
+         updateViewData?(.loaded(data)) */
     }
     
     @objc
     func showGreetingFirstName() {
         data.greeting = "I'm AI \(data.firstName)"
-        updateViewData?(.update(data))
+        viewData = (.update(data))
+        
+        /* without Combine
+         updateViewData?(.update(data)) */
     }
     
     @objc
     func showGreetingLastName() {
         data.greeting = "\(data.lastName)!"
-        updateViewData?(.update(data))
+        viewData = (.update(data))
+        
+        /* without Combine
+         updateViewData?(.update(data)) */
     }
     
     func simulateDownloadingData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
-<<<<<<< HEAD
             guard let self = self else {
                 return
             }
@@ -48,12 +68,6 @@ class GreetingViewModel : GreetingViewModelProtocol {
                                          lastName: "Blain",
                                          greeting: "")
             loadedData()
-=======
-            self?.data = GreetingViewData.Data(firstName: "David",
-                                               lastName: "Blain",
-                                               greeting: "")
-            self?.loadedData()
->>>>>>> master
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class GreetingViewController : UIViewController {
     lazy var titleLabel = createTitleLabel()
@@ -13,11 +14,11 @@ class GreetingViewController : UIViewController {
     lazy var lastNameButton = createLastNameButton()
     lazy var indicator = createActivityIndicator()
     
+    private var cancellables: Set<AnyCancellable> = []
+    
     var viewModel: GreetingViewModelProtocol! {
         didSet {
-            viewModel.updateViewData = { [weak self] viewData in
-                self?.updateView(by: viewData)
-            }
+            bindingViewModel()
         }
     }
     
@@ -70,8 +71,7 @@ class GreetingViewController : UIViewController {
             firstNameButton.isHidden = false
             
             lastNameButton.isHidden = false
-            lastNameButton.isEnabled = false;
-            lastNameButton.alpha = 0.95;
+            lastNameButton.isEnabled = false
             
             indicator.stopAnimating()
         case .update(let data):
@@ -81,8 +81,23 @@ class GreetingViewController : UIViewController {
             firstNameButton.isHidden = false
             
             lastNameButton.isHidden = false
-            lastNameButton.isEnabled = true;
-            lastNameButton.alpha = 1.0;
+            lastNameButton.isEnabled = true
         }
+    }
+    
+    func bindingViewModel() {
+        viewModel.viewDataPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] (viewData) in
+                guard let viewData = viewData else {
+                    return
+                }
+                self?.updateView(by: viewData)
+            }.store(in: &cancellables)
+        
+        /* without Combine
+         viewModel.updateViewData = { [weak self] viewData in
+         self?.updateView(by: viewData)
+         } */
     }
 }
