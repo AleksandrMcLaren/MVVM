@@ -18,7 +18,7 @@ class GreetingViewController : UIViewController {
     
     var viewModel: GreetingViewModelProtocol! {
         didSet {
-            bindingViewModel()
+            bindViewModel()
         }
     }
     
@@ -71,7 +71,7 @@ class GreetingViewController : UIViewController {
             firstNameButton.isHidden = false
             
             lastNameButton.isHidden = false
-            lastNameButton.isEnabled = false
+            lastNameButton.isGreetingEnabled = false
             
             indicator.stopAnimating()
         case .update(let data):
@@ -81,11 +81,13 @@ class GreetingViewController : UIViewController {
             firstNameButton.isHidden = false
             
             lastNameButton.isHidden = false
-            lastNameButton.isEnabled = true
+            lastNameButton.isGreetingEnabled = true
         }
     }
-    
-    func bindingViewModel() {
+}
+
+extension GreetingViewController {
+    func bindViewModel() {
         viewModel.viewDataPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] (viewData) in

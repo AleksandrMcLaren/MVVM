@@ -57,8 +57,12 @@ extension GreetingViewController {
 }
 
 extension UIButton {
-    open override var isEnabled: Bool {
-        didSet {
+    var isGreetingEnabled: Bool {
+        get {
+            return isEnabled
+        }
+        set {
+            isEnabled = newValue
             alpha = isEnabled ? 1.0 : 0.95
         }
     }
