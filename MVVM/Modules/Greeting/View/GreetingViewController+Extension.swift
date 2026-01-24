@@ -55,15 +55,3 @@ extension GreetingViewController {
         return button
     }
 }
-
-extension UIButton {
-    var isGreetingEnabled: Bool {
-        get {
-            return isEnabled
-        }
-        set {
-            isEnabled = newValue
-            alpha = isEnabled ? 1.0 : 0.95
-        }
-    }
-}

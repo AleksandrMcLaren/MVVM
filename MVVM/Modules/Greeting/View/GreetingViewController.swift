@@ -39,7 +39,7 @@ class GreetingViewController : UIViewController {
     override func updateViewConstraints() {
         super.updateViewConstraints()
         
-        view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        view.removeAutoresizingMask()
         
         NSLayoutConstraint.activate([
             titleLabel.bottomAnchor.constraint(equalTo: view.centerYAnchor),
