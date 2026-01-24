@@ -20,11 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-        let greetingModule = GreetingModuleBulder().create()
+        let greetingVC = GreetingAssembler().create()
 
         window = UIWindow(windowScene: windowScene)
         window?.windowScene = windowScene
-        window?.rootViewController = greetingModule
+        window?.rootViewController = greetingVC
         window?.makeKeyAndVisible()
     }
 }

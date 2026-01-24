@@ -25,7 +25,7 @@ extension GreetingViewController {
     func createFirstNameButton() -> UIButton {
         let button = createButtonWithTitle("What is your name?")
         button.addTarget(viewModel,
-                         action: #selector(GreetingViewModel.showGreetingFirstName),
+                         action: #selector(GreetingViewModel.didTapFirstName),
                          for: .touchUpInside)
         return button
     }
@@ -33,7 +33,15 @@ extension GreetingViewController {
     func createLastNameButton() -> UIButton {
         let button = createButtonWithTitle("What is your last name?")
         button.addTarget(viewModel,
-                         action: #selector(GreetingViewModel.showGreetingLastName),
+                         action: #selector(GreetingViewModel.didTapLastName),
+                         for: .touchUpInside)
+        return button
+    }
+    
+    func createReloadButton() -> UIButton {
+        let button = createButtonWithTitle("Reload")
+        button.addTarget(viewModel,
+                         action: #selector(GreetingViewModel.reloadData),
                          for: .touchUpInside)
         return button
     }

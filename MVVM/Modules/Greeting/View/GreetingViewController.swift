@@ -12,6 +12,7 @@ class GreetingViewController : UIViewController {
     lazy var titleLabel = createTitleLabel()
     lazy var firstNameButton = createFirstNameButton()
     lazy var lastNameButton = createLastNameButton()
+    lazy var reloadButton = createReloadButton()
     lazy var indicator = createActivityIndicator()
     
     private var cancellables: Set<AnyCancellable> = []
@@ -30,16 +31,17 @@ class GreetingViewController : UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(firstNameButton)
         view.addSubview(lastNameButton)
+        view.addSubview(reloadButton)
         view.addSubview(indicator)
         view.setNeedsUpdateConstraints()
         
-        viewModel.startFetch()
+        viewModel.reloadData()
     }
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
         
-        view.removeAutoresizingMask()
+        view.removeSubviewsAutoresizingMask()
         
         NSLayoutConstraint.activate([
             titleLabel.bottomAnchor.constraint(equalTo: view.centerYAnchor),
@@ -50,6 +52,9 @@ class GreetingViewController : UIViewController {
             
             lastNameButton.topAnchor.constraint(equalTo: firstNameButton.bottomAnchor, constant: 50),
             lastNameButton.centerXAnchor.constraint(equalTo: firstNameButton.centerXAnchor),
+            
+            reloadButton.topAnchor.constraint(equalTo: lastNameButton.bottomAnchor, constant: 70),
+            reloadButton.centerXAnchor.constraint(equalTo: firstNameButton.centerXAnchor),
             
             indicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -62,16 +67,25 @@ class GreetingViewController : UIViewController {
             titleLabel.isHidden = true
             firstNameButton.isHidden = true
             lastNameButton.isHidden = true
+            reloadButton.isHidden = true
             
             indicator.startAnimating()
-        case .loaded(let data):
+        case .success(let data):
             titleLabel.text = data.greeting
             
             titleLabel.isHidden = false
+            titleLabel.isHidden = false
             firstNameButton.isHidden = false
-            
+           
             lastNameButton.isHidden = false
             lastNameButton.isGreetingEnabled = false
+           
+            indicator.stopAnimating()
+        case .failure:
+            titleLabel.isHidden = true
+            firstNameButton.isHidden = true
+            lastNameButton.isHidden = true
+            reloadButton.isHidden = false
             
             indicator.stopAnimating()
         case .update(let data):
@@ -82,6 +96,8 @@ class GreetingViewController : UIViewController {
             
             lastNameButton.isHidden = false
             lastNameButton.isGreetingEnabled = true
+            
+            reloadButton.isHidden = false
         }
     }
 }

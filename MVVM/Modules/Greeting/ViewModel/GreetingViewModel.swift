@@ -12,9 +12,9 @@ protocol GreetingViewModelProtocol: AnyObject {
     var viewDataPublisher: Published<GreetingViewData?>.Publisher { get }
     
     /* without Combine
-     var updateViewData: ((GreetingViewData) -> ())? { get set } */
+     var updateViewData: ((GreetingViewData) -> ())? { get set }  */
     
-    func startFetch()
+    func reloadData()
 }
 
 class GreetingViewModel : GreetingViewModelProtocol {
@@ -23,26 +23,47 @@ class GreetingViewModel : GreetingViewModelProtocol {
     var viewDataPublisher: Published<GreetingViewData?>.Publisher { $viewData }
     
     /* without Combine
-     var updateViewData: ((GreetingViewData) -> ())? */
+     var updateViewData: ((GreetingViewData) -> ())?  */
     
-    func startFetch() {
-        /* without Combine
-         updateViewData?(.loading) */
+    @objc
+    func reloadData() {
+         viewData = (.loading)
         
-        viewData = (.loading)
-        simulateDownloadingData()
+        /* without Combine
+         updateViewData?(.loading)  */
+        
+        Task {
+            do {
+                let data = try await simulateDownloadingData()
+                updateData(data)
+            } catch {
+                viewData = (.failure)
+                
+                /* without Combine
+                updateViewData?(.failure)  */
+            }
+        }
     }
     
-    func loadedData() {
-        data.greeting = "Hello I'm AI"
-        viewData = (.loaded(data))
+    func simulateDownloadingData() async throws -> GreetingViewData.Data {
+        try await Task.sleep(nanoseconds: 4_000_000_000)
+        
+        let data = GreetingViewData.Data(firstName: "David",
+                                         lastName: "Blain",
+                                         greeting: "Hello I'm AI")
+        return data
+    }
+    
+    func updateData(_ data: GreetingViewData.Data) {
+        self.data = data
+        viewData = (.success(data))
         
         /* without Combine
-         updateViewData?(.loaded(data)) */
+         updateViewData?(.success(data))  */
     }
     
     @objc
-    func showGreetingFirstName() {
+    func didTapFirstName() {
         data.greeting = "I'm AI \(data.firstName)"
         viewData = (.update(data))
         
@@ -51,23 +72,11 @@ class GreetingViewModel : GreetingViewModelProtocol {
     }
     
     @objc
-    func showGreetingLastName() {
+    func didTapLastName() {
         data.greeting = "\(data.lastName)!"
         viewData = (.update(data))
         
         /* without Combine
          updateViewData?(.update(data)) */
-    }
-    
-    func simulateDownloadingData() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
-            guard let self = self else {
-                return
-            }
-            data = GreetingViewData.Data(firstName: "David",
-                                         lastName: "Blain",
-                                         greeting: "")
-            loadedData()
-        }
     }
 }

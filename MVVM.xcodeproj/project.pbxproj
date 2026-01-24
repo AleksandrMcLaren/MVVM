@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1F683E4F304D2E0000C97B50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F683E3C304D2E0000C97B50 /* SceneDelegate.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1F36E5662EFEBA7C0034EBD2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		1F36E54F2EFEBA780034EBD2 /* MVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F36E5652EFEBA7C0034EBD2 /* MVVMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MVVMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F36E56F2EFEBA7C0034EBD2 /* MVVMUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MVVMUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F683E3C304D2E0000C97B50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +93,7 @@
 		1F36E5462EFEBA780034EBD2 = {
 			isa = PBXGroup;
 			children = (
+				1F683E3C304D2E0000C97B50 /* SceneDelegate.swift */,
 				1F36E5512EFEBA780034EBD2 /* MVVM */,
 				1F36E5682EFEBA7C0034EBD2 /* MVVMTests */,
 				1F36E5722EFEBA7C0034EBD2 /* MVVMUITests */,
@@ -249,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F683E4F304D2E0000C97B50 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

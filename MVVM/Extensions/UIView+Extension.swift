@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIView {
-    func removeAutoresizingMask() {
+    func removeSubviewsAutoresizingMask() {
         subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
     }
 }

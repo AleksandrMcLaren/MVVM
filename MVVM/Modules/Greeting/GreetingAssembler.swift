@@ -11,7 +11,7 @@ protocol GreetingModuleBulderProtocol {
     func create() -> UIViewController
 }
 
-class GreetingModuleBulder: GreetingModuleBulderProtocol {
+class GreetingAssembler: GreetingModuleBulderProtocol {
     func create() -> UIViewController {
         let vc = GreetingViewController()
         vc.viewModel = GreetingViewModel()

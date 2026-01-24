@@ -96,3 +96,6 @@ func updateView(by viewData: GreetingViewData) {
     }
 }
 ```
+
+## License
+MVVM+DrivenUI is available under the MIT license. See the [LICENSE](LICENSE) file for more info.

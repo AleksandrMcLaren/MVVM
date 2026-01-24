@@ -7,7 +7,8 @@
 
 enum GreetingViewData {
     case loading
-    case loaded(Data)
+    case success(Data)
+    case failure
     case update(Data)
     
     struct Data {
