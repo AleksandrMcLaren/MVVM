@@ -99,7 +99,7 @@ extension GreetingViewController {
         
         /* without Combine
          viewModel.updateViewData = { [weak self] viewData in
-         self?.updateView(by: viewData)
+            self?.updateView(by: viewData)
          } */
     }
 }

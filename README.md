@@ -1,5 +1,7 @@
 # MVVM+DrivenUI
 Example use pattern MVVM.
+
+## Contents
     1. With Combine.
     2. Without combine. Used method closure ViewModel to View.
     
@@ -24,7 +26,7 @@ protocol GreetingViewModelProtocol: AnyObject {
     // with Combine
     var viewDataPublisher: Published<GreetingViewData?>.Publisher { get }
     // without Combine
-    var updateViewData: ((GreetingViewData) -> ())? { get set } */
+    var updateViewData: ((GreetingViewData) -> ())? { get set }
     
     func startFetch()
 }
