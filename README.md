@@ -2,8 +2,8 @@
 Example use pattern MVVM.
 
 ## Contents
-    1. With Combine.
-    2. Without combine. Used method closure ViewModel to View.
+    1. MVVM with Combine.
+    2. MVVM without combine. Used method closure ViewModel to View.
     
 ## DrivenUI
 ### Model
